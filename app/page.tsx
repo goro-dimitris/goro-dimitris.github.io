@@ -7,14 +7,17 @@ import {
   Target, 
   CheckCircle2, 
   BarChart3, 
-  User, 
   Mail,
   ExternalLink,
   Eye,
   Zap,
-  Shield
+  Shield,
+  Linkedin,
+  Globe,
+  Loader2
 } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Home() {
@@ -441,7 +444,23 @@ function BehindTheProjectSection() {
           className="text-center"
         >
           <div className="mb-8">
-            <User className="w-20 h-20 text-electric-cyan mx-auto mb-6" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative w-32 h-32 mx-auto mb-6"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan to-deep-cyan rounded-full blur-lg opacity-30" />
+              <Image
+                src="/dimitris.jpg"
+                alt="Dimitris G. - Senior UX Designer"
+                width={128}
+                height={128}
+                className="rounded-full object-cover border-4 border-electric-cyan/20 relative z-10"
+                priority
+              />
+            </motion.div>
           </div>
           
           <h2 className="text-5xl font-bold mb-6">Behind the Project</h2>
@@ -453,22 +472,22 @@ function BehindTheProjectSection() {
 
           <div className="flex justify-center gap-4">
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/gorodimitris/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-all hover:scale-105"
             >
+              <Linkedin className="w-5 h-5" />
               LinkedIn
-              <ExternalLink className="w-4 h-4" />
             </a>
             <a
-              href="#"
+              href="https://gorodimitris.gr/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-all hover:scale-105"
             >
+              <Globe className="w-5 h-5" />
               Portfolio
-              <ExternalLink className="w-4 h-4" />
             </a>
           </div>
         </motion.div>
@@ -485,13 +504,37 @@ function CollaborateSection() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In production, this would send to your email service
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setIsSubmitting(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        setError(data.error || 'Failed to send message. Please try again.')
+      }
+    } catch (err) {
+      setError('Network error. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -564,12 +607,47 @@ function CollaborateSection() {
             />
           </div>
 
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm"
+            >
+              {error}
+            </motion.div>
+          )}
+
+          {submitted && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-electric-cyan/10 border border-electric-cyan/50 rounded-lg text-electric-cyan text-sm"
+            >
+              ✓ Message sent successfully! I'll get back to you soon.
+            </motion.div>
+          )}
+
           <button
             type="submit"
-            className="w-full px-8 py-4 bg-electric-cyan text-black font-semibold rounded-lg hover:bg-electric-cyan/90 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+            disabled={isSubmitting}
+            className="w-full px-8 py-4 bg-electric-cyan text-black font-semibold rounded-lg hover:bg-electric-cyan/90 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            <Mail className="w-5 h-5" />
-            {submitted ? 'Message Sent!' : 'Send Message'}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Sending...
+              </>
+            ) : submitted ? (
+              <>
+                <CheckCircle2 className="w-5 h-5" />
+                Message Sent!
+              </>
+            ) : (
+              <>
+                <Mail className="w-5 h-5" />
+                Send Message
+              </>
+            )}
           </button>
         </motion.form>
       </div>

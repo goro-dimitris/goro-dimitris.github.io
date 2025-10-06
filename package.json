@@ -14,7 +14,9 @@
     "next": "^14.1.0",
     "framer-motion": "^11.0.3",
     "react-hook-form": "^7.50.1",
-    "lucide-react": "^0.323.0"
+    "lucide-react": "^0.323.0",
+    "@vercel/kv": "^1.0.1",
+    "resend": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
