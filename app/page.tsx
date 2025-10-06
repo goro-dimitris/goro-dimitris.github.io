@@ -513,20 +513,23 @@ function CollaborateSection() {
     setError('')
 
     try {
-      // Using Formspree for GitHub Pages compatibility
-      // Get your form ID from: https://formspree.io/
-      const FORMSPREE_FORM_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID || 'YOUR_FORM_ID'
+      // Using Web3Forms for GitHub Pages compatibility (no signup required)
+      // Get your free access key from: https://web3forms.com/
+      const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || '3f0e1db5-4c44-4c77-9c4f-8f0d0e6a4e7e'
       
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          _subject: `New UX-Ray Contact: ${formData.name}`,
+          subject: `New UX-Ray Contact from ${formData.name}`,
+          from_name: 'UX-Ray Contact Form',
+          to_email: 'gorodimitris@gmail.com',
         }),
       })
 
