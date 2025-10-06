@@ -6,9 +6,8 @@ const nextConfig = {
     unoptimized: true,
   },
   // For GitHub Pages deployment
-  // If using username.github.io, leave basePath empty
-  // If using username.github.io/repo-name, set basePath to '/repo-name'
-  basePath: '',
+  // Project site at: https://goro-dimitris.github.io/ux-ray-site
+  basePath: '/ux-ray-site',
   trailingSlash: true,
 }
 
