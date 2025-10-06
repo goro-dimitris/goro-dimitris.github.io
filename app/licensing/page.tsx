@@ -113,7 +113,7 @@ export default function LicensingPage() {
               <div>
                 <h2 className="text-3xl font-bold mb-4">Licensing Inquiries</h2>
                 <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                  I'm open to exploring various licensing arrangements, including:
+                  I&apos;m open to exploring various licensing arrangements, including:
                 </p>
                 
                 <div className="grid md:grid-cols-2 gap-4 mb-6">

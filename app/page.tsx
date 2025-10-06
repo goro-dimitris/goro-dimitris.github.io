@@ -537,7 +537,7 @@ function CollaborateSection() {
       } else {
         setError('Failed to send message. Please try again.')
       }
-    } catch (err) {
+    } catch {
       setError('Network error. Please check your connection and try again.')
     } finally {
       setIsSubmitting(false)
@@ -557,7 +557,7 @@ function CollaborateSection() {
           <p className="text-xl text-gray-400">
             Interested in piloting UX-Ray or exploring AI-assisted UX frameworks?
             <br />
-            Let's talk.
+            Let&apos;s talk.
           </p>
         </motion.div>
 
@@ -630,7 +630,7 @@ function CollaborateSection() {
               animate={{ opacity: 1, y: 0 }}
               className="p-4 bg-electric-cyan/10 border border-electric-cyan/50 rounded-lg text-electric-cyan text-sm"
             >
-              ✓ Message sent successfully! I'll get back to you soon.
+              ✓ Message sent successfully! I&apos;ll get back to you soon.
             </motion.div>
           )}
 
