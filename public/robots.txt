@@ -1,0 +1,7 @@
+# robots.txt for UX-Ray Website
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ux-ray.com/sitemap.xml
+
