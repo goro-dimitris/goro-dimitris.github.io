@@ -17,7 +17,6 @@ import {
   Loader2
 } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Home() {
@@ -452,13 +451,12 @@ function BehindTheProjectSection() {
               className="relative w-32 h-32 mx-auto mb-6"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan to-deep-cyan rounded-full blur-lg opacity-30" />
-              <Image
-                src="/dimitris.jpg"
+              <img
+                src="/ux-ray-site/dimitris.jpg"
                 alt="Dimitris G. - Senior UX Designer"
                 width={128}
                 height={128}
                 className="rounded-full object-cover border-4 border-electric-cyan/20 relative z-10"
-                priority
               />
             </motion.div>
           </div>
@@ -515,7 +513,7 @@ function CollaborateSection() {
     try {
       // Using Web3Forms for GitHub Pages compatibility (no signup required)
       // Get your free access key from: https://web3forms.com/
-      const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || '3f0e1db5-4c44-4c77-9c4f-8f0d0e6a4e7e'
+      const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || '8602707c-d243-45b6-aa37-c6b823ece133'
       
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
