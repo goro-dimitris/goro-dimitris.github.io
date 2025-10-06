@@ -513,22 +513,29 @@ function CollaborateSection() {
     setError('')
 
     try {
-      const response = await fetch('/api/contact', {
+      // Using Formspree for GitHub Pages compatibility
+      // Get your form ID from: https://formspree.io/
+      const FORMSPREE_FORM_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID || 'YOUR_FORM_ID'
+      
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `New UX-Ray Contact: ${formData.name}`,
+        }),
       })
-
-      const data = await response.json()
 
       if (response.ok) {
         setSubmitted(true)
         setFormData({ name: '', email: '', message: '' })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
-        setError(data.error || 'Failed to send message. Please try again.')
+        setError('Failed to send message. Please try again.')
       }
     } catch (err) {
       setError('Network error. Please check your connection and try again.')
