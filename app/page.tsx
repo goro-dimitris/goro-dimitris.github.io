@@ -511,32 +511,31 @@ function CollaborateSection() {
     setError('')
 
     try {
-      // Using Web3Forms for GitHub Pages compatibility (no signup required)
-      // Get your free access key from: https://web3forms.com/
-      const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || '8602707c-d243-45b6-aa37-c6b823ece133'
-      
+      // Using Web3Forms for GitHub Pages compatibility
+      // Your access key: 8602707c-d243-45b6-aa37-c6b823ece133
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
+          access_key: '8602707c-d243-45b6-aa37-c6b823ece133',
           name: formData.name,
           email: formData.email,
           message: formData.message,
           subject: `New UX-Ray Contact from ${formData.name}`,
-          from_name: 'UX-Ray Contact Form',
-          to_email: 'gorodimitris@gmail.com',
         }),
       })
 
-      if (response.ok) {
+      const result = await response.json()
+
+      if (result.success) {
         setSubmitted(true)
         setFormData({ name: '', email: '', message: '' })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
-        setError('Failed to send message. Please try again.')
+        setError(result.message || 'Failed to send message. Please try again.')
       }
     } catch {
       setError('Network error. Please check your connection and try again.')
