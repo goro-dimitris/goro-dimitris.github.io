@@ -553,7 +553,7 @@ function CollaborateSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-5xl font-bold mb-6">Let's Collaborate</h2>
+          <h2 className="text-5xl font-bold mb-6">Let&apos;s Collaborate</h2>
           <p className="text-xl text-gray-400">
             Interested in piloting UX-Ray or exploring AI-assisted UX frameworks?
             <br />
