@@ -452,7 +452,7 @@ function BehindTheProjectSection() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan to-deep-cyan rounded-full blur-lg opacity-30" />
               <img
-                src="/ux-ray-site/dimitris.jpg"
+                src="/dimitris.jpg"
                 alt="Dimitris G. - Senior UX Designer"
                 width={128}
                 height={128}
@@ -511,20 +511,19 @@ function CollaborateSection() {
     setError('')
 
     try {
-      // Using Web3Forms for GitHub Pages compatibility
-      // Your access key: 8602707c-d243-45b6-aa37-c6b823ece133
-      const response = await fetch('https://api.web3forms.com/submit', {
+      // Using Formsubmit.co - No signup required, works immediately
+      const response = await fetch('https://formsubmit.co/ajax/gorodimitris@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
         body: JSON.stringify({
-          access_key: '8602707c-d243-45b6-aa37-c6b823ece133',
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          subject: `New UX-Ray Contact from ${formData.name}`,
+          _subject: `New UX-Ray Contact from ${formData.name}`,
+          _captcha: 'false',
         }),
       })
 
@@ -535,7 +534,7 @@ function CollaborateSection() {
         setFormData({ name: '', email: '', message: '' })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
-        setError(result.message || 'Failed to send message. Please try again.')
+        setError('Failed to send message. Please try again.')
       }
     } catch {
       setError('Network error. Please check your connection and try again.')
