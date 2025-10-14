@@ -715,7 +715,7 @@ function VideoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             <source src="/HowItWorksVideo.mp4" type="video/mp4" />
             <source src="/HowItWorksVideo.mov" type="video/quicktime" />
             <p className="text-white p-4">
-              Your browser doesn't support this video format. 
+              Your browser doesn&apos;t support this video format. 
               <br />
               <a 
                 href="/HowItWorksVideo.mp4" 
