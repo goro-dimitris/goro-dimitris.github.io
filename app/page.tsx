@@ -337,7 +337,7 @@ function UXScienceSection() {
   const [selectedStandard, setSelectedStandard] = useState<{
     title: string;
     body: string;
-    icon: any;
+    icon: React.ComponentType<{ className?: string }>;
   } | null>(null)
 
   const standards = [
