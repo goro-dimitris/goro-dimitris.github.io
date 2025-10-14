@@ -712,13 +712,13 @@ function VideoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             playsInline
             preload="auto"
           >
+            <source src="/ux-ray-site/HowItWorksVideo.mp4" type="video/mp4" />
             <source src="/ux-ray-site/HowItWorksVideo.mov" type="video/quicktime" />
-            <source src="/ux-ray-site/HowItWorksVideo.mov" type="video/mp4" />
             <p className="text-white p-4">
               Your browser doesn't support this video format. 
               <br />
               <a 
-                href="/ux-ray-site/HowItWorksVideo.mov" 
+                href="/ux-ray-site/HowItWorksVideo.mp4" 
                 download 
                 className="text-electric-cyan hover:underline"
               >
