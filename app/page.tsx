@@ -31,6 +31,7 @@ export default function Home() {
       <HowItWorksSection />
       <UXScienceSection />
       <ValuePropositionSection />
+      <RoadmapSection />
       <BehindTheProjectSection />
       <CollaborateSection />
       <Footer />
@@ -330,24 +331,38 @@ function HowItWorksSection() {
 
 // Built on UX Science Section
 function UXScienceSection() {
+  const [selectedStandard, setSelectedStandard] = useState(null)
+
   const standards = [
     {
       title: 'Nielsen Norman Heuristics',
       description: '10 general principles for interaction design',
-      link: 'https://www.nngroup.com/articles/ten-usability-heuristics/',
       icon: Shield,
+      content: {
+        title: 'Nielsen Norman Heuristics',
+        body: 'The 10 Usability Heuristics for User Interface Design are a set of general principles for interaction design. These heuristics were developed by Jakob Nielsen and Rolf Molich in 1990 and have become the foundation for usability evaluation. They include principles like visibility of system status, user control and freedom, consistency and standards, error prevention, recognition rather than recall, flexibility and efficiency of use, aesthetic and minimalist design, help users recognize and recover from errors, and help and documentation.',
+        icon: Shield
+      }
     },
     {
       title: 'WCAG 2.2 Standards',
       description: 'Web Content Accessibility Guidelines',
-      link: 'https://www.w3.org/WAI/WCAG22/quickref/',
       icon: CheckCircle2,
+      content: {
+        title: 'WCAG 2.2 Standards',
+        body: 'The Web Content Accessibility Guidelines (WCAG) 2.2 is the latest version of the international standard for web accessibility. It provides a comprehensive framework for making web content more accessible to people with disabilities. The guidelines are organized around four principles: Perceivable, Operable, Understandable, and Robust (POUR). Each principle has specific guidelines and success criteria that help ensure digital content is accessible to users with various disabilities, including visual, auditory, physical, speech, cognitive, language, learning, and neurological disabilities.',
+        icon: CheckCircle2
+      }
     },
     {
       title: 'Custom Guidelines',
       description: 'Adaptable to your brand and client requirements',
-      link: '#',
       icon: Sparkles,
+      content: {
+        title: 'Custom Guidelines',
+        body: 'Custom guidelines are tailored UX standards that align with your specific brand identity, target audience, and business objectives. These guidelines go beyond universal principles to incorporate your unique value proposition, brand personality, and user expectations. They can include industry-specific requirements, cultural considerations, accessibility needs, and performance metrics that are relevant to your product or service. Custom guidelines ensure consistency across all touchpoints while maintaining the flexibility to evolve with your brand and user needs.',
+        icon: Sparkles
+      }
     },
   ]
 
@@ -360,32 +375,69 @@ function UXScienceSection() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-5xl font-bold mb-6">Built on UX Science</h2>
-          <p className="text-xl text-gray-400">Grounded in proven frameworks and industry standards</p>
+          <h2 className="text-5xl font-bold mb-6">Research-Driven UX Framework</h2>
+          <p className="text-xl text-gray-400">Combining established heuristics, accessibility standards, and custom guidelines for comprehensive design evaluation</p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {standards.map((standard, index) => (
-            <motion.a
-              key={standard.title}
-              href={standard.link}
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.button
+              key={index}
+              onClick={() => setSelectedStandard(standard.content)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
-              className="p-8 bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl hover:border-electric-cyan/50 transition-all group cursor-pointer"
+              className="p-8 bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl hover:border-electric-cyan/50 transition-all group cursor-pointer text-left w-full"
             >
               <standard.icon className="w-12 h-12 text-electric-cyan mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-bold mb-3 flex items-center gap-2">
+              <h3 className="text-2xl font-bold mb-3">
                 {standard.title}
-                <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
               </h3>
               <p className="text-gray-400">{standard.description}</p>
-            </motion.a>
+            </motion.button>
           ))}
         </div>
+
+        {/* Modal */}
+        {selectedStandard && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            onClick={() => setSelectedStandard(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative w-full max-w-2xl mx-4 bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedStandard(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-gray-700/50 hover:bg-gray-700 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+
+              {/* Modal Content */}
+              <div className="p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-electric-cyan">
+                    <selectedStandard.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white">{selectedStandard.title}</h3>
+                </div>
+                <p className="text-gray-300 leading-relaxed text-lg">
+                  {selectedStandard.body}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   )
@@ -439,6 +491,160 @@ function ValuePropositionSection() {
             </motion.div>
           ))}
         </div>
+
+        {/* Disclaimer */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 p-6 bg-gray-800/30 border border-gray-700/50 rounded-xl"
+        >
+          <div className="flex items-start gap-3">
+            <div className="text-amber-400 mt-1">
+              <Shield className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-amber-400 mb-2">Important Notice</h4>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                The performance metrics presented above are based on preliminary research findings, 
+                industry benchmarks, and projected outcomes from our initial user studies. These 
+                figures represent estimated improvements based on current UX audit methodologies 
+                and should be considered as directional indicators rather than guaranteed results. 
+                Actual performance may vary depending on project complexity, team experience, 
+                and implementation quality.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// Roadmap Section
+function RoadmapSection() {
+  const roadmapItems = [
+    {
+      phase: 'Phase 1',
+      title: 'Core Framework',
+      status: 'completed',
+      description: 'Basic UX audit capabilities with Nielsen Norman heuristics',
+      features: ['Heuristic evaluation', 'Accessibility checks', 'Basic reporting']
+    },
+    {
+      phase: 'Phase 2',
+      title: 'AI Enhancement',
+      status: 'in-progress',
+      description: 'Advanced AI-powered analysis and custom guideline support',
+      features: ['Custom guidelines', 'Advanced AI models', 'Contextual recommendations']
+    },
+    {
+      phase: 'Phase 3',
+      title: 'Team Collaboration',
+      status: 'planned',
+      description: 'Multi-user support and team workflow integration',
+      features: ['Team workspaces', 'Collaborative reviews', 'Version control']
+    },
+    {
+      phase: 'Phase 4',
+      title: 'Enterprise Features',
+      status: 'planned',
+      description: 'Enterprise-grade features and advanced analytics',
+      features: ['Advanced analytics', 'API integration', 'Custom reporting']
+    }
+  ]
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'text-green-400 bg-green-400/20'
+      case 'in-progress': return 'text-blue-400 bg-blue-400/20'
+      case 'planned': return 'text-gray-400 bg-gray-400/20'
+      default: return 'text-gray-400 bg-gray-400/20'
+    }
+  }
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'completed': return CheckCircle2
+      case 'in-progress': return Clock
+      case 'planned': return Calendar
+      default: return Calendar
+    }
+  }
+
+  return (
+    <section className="py-32 px-6 bg-gradient-to-b from-transparent to-gray-900/20">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <h2 className="text-5xl font-bold mb-6">Development Roadmap</h2>
+          <p className="text-xl text-gray-400">Our journey to revolutionize UX auditing through AI</p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {roadmapItems.map((item, index) => {
+            const StatusIcon = getStatusIcon(item.status)
+            return (
+              <motion.div
+                key={item.phase}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className="relative"
+              >
+                {/* Connection Line */}
+                {index < roadmapItems.length - 1 && (
+                  <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-electric-cyan/50 to-transparent transform translate-x-4" />
+                )}
+                
+                <div className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700 hover:border-electric-cyan/50 transition-all h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusColor(item.status)}`}>
+                      {item.status.replace('-', ' ')}
+                    </div>
+                    <StatusIcon className="w-5 h-5 text-gray-400" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-2 text-white">{item.phase}</h3>
+                  <h4 className="text-xl font-semibold mb-3 text-electric-cyan">{item.title}</h4>
+                  <p className="text-gray-400 mb-4 text-sm leading-relaxed">{item.description}</p>
+                  
+                  <ul className="space-y-2">
+                    {item.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center gap-2 text-sm text-gray-300">
+                        <div className="w-1.5 h-1.5 bg-electric-cyan rounded-full" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-400 mb-6">
+            Want to influence our roadmap? Share your ideas and help shape the future of UX auditing.
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-electric-cyan text-black font-semibold rounded-lg hover:bg-electric-cyan/90 transition-all hover:scale-105"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Share Your Ideas
+          </a>
+        </motion.div>
       </div>
     </section>
   )
@@ -478,7 +684,9 @@ function BehindTheProjectSection() {
           
           <p className="text-xl text-gray-400 leading-relaxed mb-8">
             UX-Ray is a personal R&D initiative by <span className="text-white font-semibold">Dimitris G.</span>, 
-            a Senior UX Designer blending creativity and AI to make technology more human-centered.
+            a Senior UX Designer at <span className="text-electric-cyan font-semibold">Globant</span> who blends 
+            creativity and AI to make technology more human-centered. This project represents the intersection 
+            of professional expertise and innovative thinking.
           </p>
 
           <div className="flex justify-center gap-4">
@@ -567,9 +775,13 @@ function CollaborateSection() {
         >
           <h2 className="text-5xl font-bold mb-6">Let&apos;s Collaborate</h2>
           <p className="text-xl text-gray-400">
-            Interested in piloting UX-Ray or exploring AI-assisted UX frameworks?
+            Calling all AI enthusiasts and UX innovators! 
             <br />
-            Let&apos;s talk.
+            <span className="text-electric-cyan">Join the conversation</span> about the future of AI-powered design tools.
+          </p>
+          <p className="text-lg text-gray-500 mt-4">
+            Whether you&apos;re experimenting with LLMs, building design systems, or pushing the boundaries 
+            of human-AI collaboration in UX—let&apos;s connect and explore together.
           </p>
         </motion.div>
 
