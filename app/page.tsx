@@ -8,7 +8,6 @@ import {
   CheckCircle2, 
   BarChart3, 
   Mail,
-  ExternalLink,
   Eye,
   Zap,
   Shield,
@@ -16,9 +15,13 @@ import {
   Globe,
   Loader2,
   Play,
-  X
+  X,
+  MessageCircle,
+  Clock,
+  Calendar
 } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Home() {
@@ -670,7 +673,7 @@ function BehindTheProjectSection() {
               className="relative w-32 h-32 mx-auto mb-6"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan to-deep-cyan rounded-full blur-lg opacity-30" />
-              <img
+              <Image
                 src="/dimitris.jpg"
                 alt="Dimitris G. - Senior UX Designer"
                 width={128}
