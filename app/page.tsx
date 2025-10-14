@@ -14,15 +14,19 @@ import {
   Shield,
   Linkedin,
   Globe,
-  Loader2
+  Loader2,
+  Play,
+  X
 } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Home() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
+
   return (
     <main className="min-h-screen bg-black text-white">
-      <HeroSection />
+      <HeroSection onVideoOpen={() => setIsVideoOpen(true)} />
       <WhatIsSection />
       <HowItWorksSection />
       <UXScienceSection />
@@ -30,12 +34,13 @@ export default function Home() {
       <BehindTheProjectSection />
       <CollaborateSection />
       <Footer />
+      <VideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </main>
   )
 }
 
 // Hero Section
-function HeroSection() {
+function HeroSection({ onVideoOpen }: { onVideoOpen: () => void }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
       {/* Animated Background Grid */}
@@ -117,6 +122,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a
             href="#how-it-works"
@@ -125,6 +131,13 @@ function HeroSection() {
             Learn How It Works
             <Zap className="w-5 h-5" />
           </a>
+          <button
+            onClick={onVideoOpen}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg border border-gray-600 hover:border-electric-cyan/50 transition-all hover:scale-105"
+          >
+            <Play className="w-5 h-5" />
+            Watch Demo
+          </button>
         </motion.div>
       </div>
     </section>
@@ -452,7 +465,7 @@ function BehindTheProjectSection() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan to-deep-cyan rounded-full blur-lg opacity-30" />
               <img
-                src="/dimitris.jpg"
+                src="/ux-ray-site/dimitris.jpg"
                 alt="Dimitris G. - Senior UX Designer"
                 width={128}
                 height={128}
@@ -658,6 +671,72 @@ function CollaborateSection() {
         </motion.form>
       </div>
     </section>
+  )
+}
+
+// Video Modal Component
+function VideoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  if (!isOpen) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        className="relative w-full max-w-4xl mx-4 bg-black rounded-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-colors"
+        >
+          <X className="w-6 h-6 text-white" />
+        </button>
+
+        {/* Video Player */}
+        <div className="relative w-full aspect-video">
+          <video
+            className="w-full h-full object-cover"
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/ux-ray-site/HowItWorksVideo.mov" type="video/quicktime" />
+            <source src="/ux-ray-site/HowItWorksVideo.mov" type="video/mp4" />
+            <p className="text-white p-4">
+              Your browser doesn't support this video format. 
+              <br />
+              <a 
+                href="/ux-ray-site/HowItWorksVideo.mov" 
+                download 
+                className="text-electric-cyan hover:underline"
+              >
+                Download the video instead
+              </a>
+            </p>
+          </video>
+        </div>
+
+        {/* Video Info */}
+        <div className="p-6 bg-gradient-to-b from-gray-900 to-black">
+          <h3 className="text-xl font-bold text-white mb-2">UX-Ray Demo</h3>
+          <p className="text-gray-400">
+            See how UX-Ray works in action with this interactive demonstration.
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
