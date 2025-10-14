@@ -530,7 +530,13 @@ function ValuePropositionSection() {
 
 // Roadmap Section
 function RoadmapSection() {
-  const roadmapItems = [
+  const roadmapItems: Array<{
+    phase: string;
+    title: string;
+    status: 'completed' | 'in-progress' | 'planned';
+    description: string;
+    features: string[];
+  }> = [
     {
       phase: 'Phase 1',
       title: 'Core Framework',
@@ -561,7 +567,7 @@ function RoadmapSection() {
     }
   ]
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: 'completed' | 'in-progress' | 'planned') => {
     switch (status) {
       case 'completed': return 'text-green-400 bg-green-400/20'
       case 'in-progress': return 'text-blue-400 bg-blue-400/20'
@@ -570,7 +576,7 @@ function RoadmapSection() {
     }
   }
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: 'completed' | 'in-progress' | 'planned') => {
     switch (status) {
       case 'completed': return CheckCircle2
       case 'in-progress': return Clock
