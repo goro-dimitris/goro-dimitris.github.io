@@ -334,7 +334,11 @@ function HowItWorksSection() {
 
 // Built on UX Science Section
 function UXScienceSection() {
-  const [selectedStandard, setSelectedStandard] = useState(null)
+  const [selectedStandard, setSelectedStandard] = useState<{
+    title: string;
+    body: string;
+    icon: any;
+  } | null>(null)
 
   const standards = [
     {
